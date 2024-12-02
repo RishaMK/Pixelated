@@ -1,4 +1,3 @@
-// app/components/Spinner.tsx
 import React from 'react';
 import { ActivityIndicator, View, StyleSheet } from 'react-native';
 

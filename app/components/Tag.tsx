@@ -5,12 +5,12 @@ import useGif from '../hooks/useGifs';
 import { Image } from 'expo-image';
 
 const Tag = () => {
-  const [tag, setTag] = useState(''); // Store the input tag
-  const { gif, loading, fetchData } = useGif(); // Remove tag from here to avoid automatic fetching
+  const [tag, setTag] = useState(''); 
+  const { gif, loading, fetchData } = useGif(); 
 
-  // Function to handle the button click and fetch the GIF
+
   const handleGenerateClick = () => {
-    fetchData(tag); // Fetch the GIF based on the tag
+    fetchData(tag); 
   };
 
   const defaultImage = 'https://images.app.goo.gl/EFgtEA1omtKKuW7G7';
@@ -23,7 +23,7 @@ const Tag = () => {
         <Spinner />
       ) : (
         <Image
-          source={{ uri: gif || defaultImage }} // Use default image if gif is empty
+          source={{ uri: gif || defaultImage }} 
           style={styles.image}
           contentFit="contain"
         />
@@ -31,15 +31,15 @@ const Tag = () => {
 
       <TextInput
         style={styles.input}
-        onChangeText={(text) => setTag(text)} // Update tag state as the user types
+        onChangeText={(text) => setTag(text)} 
         placeholder="Search here"
         value={tag}
       />
 
       <Button
         title="GENERATE"
-        onPress={handleGenerateClick} // Trigger fetchData when the button is pressed
-        color="#32CD32"  // Set the button color (equivalent to bg-green-300)
+        onPress={handleGenerateClick} 
+        color="#32CD32"  
       />
     </View>
   );
@@ -48,7 +48,7 @@ const Tag = () => {
 const styles = StyleSheet.create({
   container: {
     width: '80%',
-    backgroundColor: '#32CD32', // green-400
+    backgroundColor: '#32CD32', 
     borderRadius: 20,
     alignItems: 'center',
     padding: 20,
@@ -61,15 +61,15 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   image: {
-    width: '100%', // Use full width of the container
-    height: 200,   // Limit the height to ensure it doesn't overflow
-    maxHeight: 300, // Max height to maintain the aspect ratio
-    resizeMode: 'contain', // Ensure the image is contained within the box
+    width: '100%', 
+    height: 200,   
+    maxHeight: 300, 
+    resizeMode: 'contain', 
     marginVertical: 10,
   },
   input: {
     width: '80%',
-    backgroundColor: '#90EE90', // green-300
+    backgroundColor: '#90EE90', 
     padding: 10,
     borderRadius: 10,
     marginVertical: 10,

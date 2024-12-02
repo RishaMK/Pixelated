@@ -5,23 +5,23 @@ const apiKey = process.env.EXPO_PUBLIC_API_KEY;
 const url = `https://api.giphy.com/v1/gifs/random?api_key=${apiKey}`;
 
 const useGif = () => {
-  const [gif, setGif] = useState<string>(''); // Stores the gif URL
-  const [loading, setLoading] = useState<boolean>(false); // Indicates loading state
+  const [gif, setGif] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false); 
 
   const fetchData = async (tag: string = '') => {
-    setLoading(true); // Start loading
+    setLoading(true); 
     try {
       const { data } = await axios.get(tag ? `${url}&tag=${tag}` : url);
-      const imageSource = data.data.images.downsized_large.url; // Extract the gif URL
-      setGif(imageSource); // Update the gif state
+      const imageSource = data.data.images.downsized_large.url; 
+      setGif(imageSource); 
     } catch (error) {
-      console.error('Error fetching data:', error); // Handle errors
+      console.error('Error fetching data:', error); 
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
     }
   };
 
-  return { gif, loading, fetchData }; // Return gif, loading, and fetchData function
+  return { gif, loading, fetchData }; 
 };
 
 export default useGif;

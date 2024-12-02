@@ -1,4 +1,3 @@
-// app/components/Random.tsx
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import Spinner from './Spinner';
@@ -18,7 +17,7 @@ const Random = () => {
         <Spinner />
       ) : (
         <Image
-          source={{ uri: gif || defaultImage }} // Use default image if gif is empty
+          source={{ uri: gif || defaultImage }} 
           style={styles.image}
           contentFit="contain"
         />
@@ -26,8 +25,8 @@ const Random = () => {
 
       <Button
         title="GENERATE"
-        onPress={() => fetchData()}  // Fetch new GIF
-        color="#FF69B4"  // Set the button color (equivalent to bg-pink-300)
+        onPress={() => fetchData()}  
+        color="#FF69B4"  
       />
     </View>
   );
@@ -36,7 +35,7 @@ const Random = () => {
 const styles = StyleSheet.create({
   container: {
     width: '80%',
-    backgroundColor: '#FF1493', // pink-400
+    backgroundColor: '#FF1493', 
     borderRadius: 20,
     alignItems: 'center',
     padding: 20,
@@ -49,10 +48,10 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   image: {
-    width: '100%', // Use full width of the container
-    height: 200,   // Limit the height to ensure it doesn't overflow
-    maxHeight: 300, // Max height to maintain the aspect ratio
-    resizeMode: 'contain', // Ensure the image is contained within the box
+    width: '100%', 
+    height: 200,   
+    maxHeight: 300, 
+    resizeMode: 'contain', 
     marginVertical: 10,
   },
 });

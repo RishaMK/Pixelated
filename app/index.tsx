@@ -1,4 +1,3 @@
-// app/index.tsx
 import React from 'react';
 import { View, Text, StyleSheet, ImageBackground, ScrollView } from 'react-native';
 import Random from './components/Random';
@@ -20,7 +19,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,  // Ensure the container grows based on content size
+    flexGrow: 1,  
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'flex-start',
