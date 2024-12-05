@@ -34,26 +34,34 @@ const Random = () => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '80%',
-    backgroundColor: '#FF1493', 
+    width: '40%',
+    backgroundColor: '#ffe4c4', 
     borderRadius: 20,
     alignItems: 'center',
     padding: 20,
-    marginTop: 20,
+    margin: 40,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+   
   },
   header: {
-    fontSize: 20,
+    fontSize: 24, 
     fontWeight: 'bold',
-    color: '#FFF',
+    color: '#333', 
     marginVertical: 10,
+    textAlign: 'center', 
   },
   image: {
-    width: '100%', 
-    height: 200,   
-    maxHeight: 300, 
-    resizeMode: 'contain', 
-    marginVertical: 10,
+    width: '100%',
+    height: 200,
+    maxHeight: 300,
+    borderRadius: 10, 
   },
+  Button:{
+    margin:70,
+  }
 });
 
-export default Random;
+export default Random;

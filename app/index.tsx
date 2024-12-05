@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingTop: 20,
+    backgroundColor:'white'
   },
   background: {
     flex: 1,
@@ -44,9 +45,10 @@ const styles = StyleSheet.create({
   },
   content: {
     width: '100%',
-    flexDirection: 'column',
+    flexDirection: 'row',
+    justifyContent: 'space-between', 
     alignItems: 'center',
     gap: 8,
-    marginTop: 30,
-  },
+    marginTop: 30,
+  },
 });
