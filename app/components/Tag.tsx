@@ -1,22 +1,29 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import Spinner from './Spinner';
+import Spinner from '../components/Spinner';
 import useGif from '../hooks/useGifs';
 import { Image } from 'expo-image';
+import { useRouter } from 'expo-router';  
 
-const Tag = () => {
+export default function TagScreen() {
   const [tag, setTag] = useState('');
   const { gif, loading, fetchData } = useGif();
+  const router = useRouter();  
+
+  const defaultImage = 'https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif';
+
 
   const handleGenerateClick = () => {
-    fetchData(tag);
+    if (tag.trim() === '') {
+      alert('Please enter a search term.');
+      return;
+    }
+    fetchData(tag);  
   };
-
-  const defaultImage = 'https://images.app.goo.gl/EFgtEA1omtKKuW7G7';
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Search for a GIF</Text> {/* Clearer label */}
+      <Text style={styles.header}>Search for a GIF</Text>
 
       {loading ? (
         <Spinner />
@@ -24,7 +31,7 @@ const Tag = () => {
         <Image
           source={{ uri: gif || defaultImage }}
           style={styles.image}
-          contentFit="cover" // Adjust for different fit preferences
+          contentFit="contain"
         />
       )}
 
@@ -34,58 +41,55 @@ const Tag = () => {
           onChangeText={(text) => setTag(text)}
           placeholder="Enter a search term"
           value={tag}
-          placeholderTextColor="#CCC" // Lighter placeholder color
+          placeholderTextColor="#AAA"
         />
-
         <Button title="SEARCH" onPress={handleGenerateClick} color="#32CD32" />
       </View>
+
+      {/* Optional: Navigation Button to go back or to other screen */}
+      <Button 
+        title="Go Back" 
+        onPress={() => router.back()}  // Using router.back() for navigating back
+        color="#FF69B4"
+      />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    height:'70%',
-    width: '40%',
-    backgroundColor: '#ffe4c4', // Lighter background
-    borderRadius: 20,
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#ffe4c4',
     padding: 20,
-    margin: 40,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2, // Add subtle shadow
   },
   header: {
-    fontSize: 24, // Increase font size slightly
+    fontSize: 24,
     fontWeight: 'bold',
-    color: '#333', // Darker text color
-    marginVertical: 10,
-    textAlign: 'center',
+    color: '#333',
+    marginBottom: 20,
   },
   image: {
-    width: '100%',
-    height: 120,
-    maxHeight: 300,
-    borderRadius: 10, // Rounded corners for GIF
-    // contentFit: "contain", // Adjust for different fit preferences
+    width: 300,
+    height: 300,
+    borderRadius: 10,
+    marginVertical: 20,
   },
   searchRow: {
-    flexDirection: 'row', // Make elements horizontal
-    justifyContent: 'space-between', // Distribute evenly
-    alignItems: 'center', // Align vertically
-    width: '100%', // Take full width of container
-    marginTop: 10, // Add margin top
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    paddingHorizontal: 20,
   },
   input: {
-    flex: 1, // Make input take remaining space after button
-    backgroundColor: '#FFF', // White background
+    flex: 1,
+    backgroundColor: '#FFF',
     padding: 10,
     borderRadius: 10,
-    textAlign: 'center',
-    margin:30
+    marginRight: 10,
+    borderWidth: 1,
+    borderColor: '#CCC',
   },
 });
-
-export default Tag;

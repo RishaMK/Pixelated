@@ -3,11 +3,13 @@ import { View, Text, Button, StyleSheet } from 'react-native';
 import Spinner from './Spinner';
 import useGif from '../hooks/useGifs';
 import { Image } from 'expo-image';
+import { useRouter } from 'expo-router';
 
 const Random = () => {
   const { gif, loading, fetchData } = useGif();
+  const router = useRouter(); 
 
-  const defaultImage = 'https://images.app.goo.gl/EFgtEA1omtKKuW7G7';
+  const defaultImage = 'https://images.gr-assets.com/hostedimages/1591136181ra/29584860.gif';
 
   return (
     <View style={styles.container}>
@@ -28,40 +30,51 @@ const Random = () => {
         onPress={() => fetchData()}  
         color="#FF69B4"  
       />
+      <Button
+        title="Next (TagPage)"
+        onPress={() => router.push('/TagPage')}  
+        color="#32CD32" 
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: '40%',
-    backgroundColor: '#ffe4c4', 
-    borderRadius: 20,
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#ffe4c4',
     padding: 20,
-    margin: 40,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-   
   },
   header: {
-    fontSize: 24, 
+    fontSize: 24,
     fontWeight: 'bold',
-    color: '#333', 
-    marginVertical: 10,
-    textAlign: 'center', 
+    color: '#333',
+    marginBottom: 20,
   },
   image: {
-    width: '100%',
-    height: 200,
-    maxHeight: 300,
-    borderRadius: 10, 
+    width: 300,
+    height: 300,
+    borderRadius: 10,
+    marginVertical: 20,
   },
-  Button:{
-    margin:70,
-  }
+  searchRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    paddingHorizontal: 20,
+  },
+  input: {
+    flex: 1,
+    backgroundColor: '#FFF',
+    padding: 10,
+    borderRadius: 10,
+    marginRight: 10,
+    borderWidth: 1,
+    borderColor: '#CCC',
+  },
 });
 
 export default Random;

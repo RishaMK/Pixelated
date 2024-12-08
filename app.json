@@ -36,6 +36,9 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "EXPO_PUBLIC_API_KEY": "rLleFCHhZZyX0k4qia8KosPUFsEgluuV"
     }
   }
 }
