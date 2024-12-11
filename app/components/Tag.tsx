@@ -46,10 +46,9 @@ export default function TagScreen() {
         <Button title="SEARCH" onPress={handleGenerateClick} color="#32CD32" />
       </View>
 
-      {/* Optional: Navigation Button to go back or to other screen */}
       <Button 
         title="Go Back" 
-        onPress={() => router.back()}  // Using router.back() for navigating back
+        onPress={() => router.back()} 
         color="#FF69B4"
       />
     </View>
