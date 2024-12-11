@@ -1,35 +1,39 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet, Dimensions, ImageBackground } from 'react-native';
-import { useRouter } from 'expo-router'; 
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Image } from 'expo-image';
+import { router } from 'expo-router';
 
-const Home = () => {
-  const router = useRouter();
-
+export default function App() {
   const backgroundImage = 'https://media.giphy.com/media/YrZECW1GgBkqat6F0B/giphy.gif';
 
-
   return (
-    <ImageBackground 
-      source={{ uri: backgroundImage }} 
-      style={styles.container}
-      resizeMode="contain"
-    >
-      <View style={styles.content}>
-        <Text style={styles.title}>Welcome to the GIF Generator!</Text>
-        <Button 
-          title="Go to Random GIF" 
-          onPress={() => router.push('/RandomPage')} 
-          color="#FF69B4" 
-        />
-        <Button 
-          title="Go to Search GIF" 
-          onPress={() => router.push('/TagPage')} 
-          color="#32CD32" 
-        />
+    <View style={styles.container}>
+      <Image 
+        source={{ uri: backgroundImage }} 
+        style={styles.backgroundImage}
+        resizeMode="contain"
+      />
+      <View style={styles.overlayContent}>
+        <Text style={styles.title}>Welcome to PIXELATED!</Text>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity 
+            style={[styles.button, styles.buttonRandomGIF]} 
+            onPress={() => router.push('/RandomPage')}
+          >
+            <Text style={styles.buttonText}>RandomGIF</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={[styles.button, styles.buttonSearchGIF]} 
+            onPress={() => router.push('/TagPage')}
+          >
+            <Text style={styles.buttonText}>SearchGIF</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </ImageBackground>
+    </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -37,21 +41,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    backgroundColor: '#FFD27B',
+  },
+  backgroundImage: {
+    position: 'absolute',
     width: '100%',
     height: '100%',
   },
-  content: {
+  overlayContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     width: '100%',
     maxWidth: 360,
+    maxHeight: 300,
     padding: 30,
-    backgroundColor: 'rgba(255, 255, 255, 0.9)', 
-    borderRadius: 20,
-    alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.5)', 
+    borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.25,
     shadowRadius: 12,
-    elevation: 8, 
+    elevation: 0, 
     overflow: 'hidden', 
   },
   title: {
@@ -62,19 +73,29 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textTransform: 'uppercase',
   },
-  button: {
+  buttonContainer: {
     marginTop: 20,
-    borderRadius: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 25,
-    backgroundColor: '#FF69B4', 
+    width: '100%',
+    flexDirection: 'column', 
+    justifyContent: 'space-between',
+    gap: 20,
+  },
+  button: {
+    padding: 10,
+    borderRadius: 5,
     alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  buttonRandomGIF: {
+    backgroundColor: '#FFD1DC',
+  },
+  buttonSearchGIF: {
+    backgroundColor: '#77DD77',
   },
   buttonText: {
+    color: '#000',
     fontSize: 18,
-    color: '#fff',
-    fontWeight: '600',
+    fontWeight: 'bold',
   },
 });
-
-export default Home;
