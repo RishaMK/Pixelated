@@ -2,22 +2,21 @@ import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
-import { useCameraPermissions } from 'expo-camera'; // Import the hook
+import { useCameraPermissions } from 'expo-camera'; 
 
 const Home = () => {
   const router = useRouter();
 
-  // Destructure the permission hook to get the status and requestPermission function
   const [permission, requestPermission] = useCameraPermissions();
-  const hasPermission = permission?.status === 'granted'; // Check if the permission is granted
+  const hasPermission = permission?.status === 'granted'; 
 
   const backgroundImage = 'https://media.giphy.com/media/YrZECW1GgBkqat6F0B/giphy.gif';
 
   const handleScanQRCode = () => {
     if (hasPermission) {
-      router.push('/QRScanPage');  // Navigate to QR scanning page if permission is granted
+      router.push('/QRScanPage'); 
     } else {
-      requestPermission(); // Request permission if not granted
+      requestPermission();
     }
   };
 
@@ -45,11 +44,13 @@ const Home = () => {
             <Text style={styles.buttonText}>SearchGIF</Text>
           </TouchableOpacity>
 
-          <Button
-            title="Scan QR Code"
-            onPress={handleScanQRCode}  // Trigger QR scanning when clicked
-            color="#4CAF50"  // A green color for the scan button
-          />
+          {/* Apply same styling to the Scan QR Code button */}
+          <TouchableOpacity 
+            style={[styles.button, styles.buttonRandomGIF]} 
+            onPress={handleScanQRCode}  
+          >
+            <Text style={styles.buttonText}>Scan QR Code</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     maxWidth: 360,
-    maxHeight: 300,
+    maxHeight: 350,
     padding: 30,
     backgroundColor: 'rgba(255, 255, 255, 0.5)', 
     borderRadius: 10,
@@ -91,6 +92,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333', 
     marginBottom: 20,
+    marginTop:30,
     textAlign: 'center',
     textTransform: 'uppercase',
   },
@@ -100,6 +102,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column', 
     justifyContent: 'space-between',
     gap: 20,
+    marginBottom:50
   },
   button: {
     padding: 10,
