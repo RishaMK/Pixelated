@@ -24,7 +24,7 @@ export default function TagScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Search for a GIF</Text>
-
+      <View style={styles.overlayContent}>
       {loading ? (
         <Spinner />
       ) : (
@@ -43,25 +43,45 @@ export default function TagScreen() {
           value={tag}
           placeholderTextColor="#AAA"
         />
-        <Button title="SEARCH" onPress={handleGenerateClick} color="#32CD32" />
+        <Button title="SEARCH" onPress={handleGenerateClick} color="#77DD77" />
       </View>
-
-      <Button 
-        title="Go Back" 
-        onPress={() => router.back()} 
-        color="#FF69B4"
-      />
+      </View>
+     
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#FFD27B',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ffe4c4',
     padding: 20,
+  },
+  overlayContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    maxWidth: 360,
+    maxHeight: 550,
+    padding: 30,
+    backgroundColor: 'rgba(255, 255, 255, 0.5)', 
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.25,
+    shadowRadius: 12,
+    elevation: 0, 
+    overflow: 'hidden', 
+  },
+  button: {
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
   },
   header: {
     fontSize: 24,
@@ -89,6 +109,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginRight: 10,
     borderWidth: 1,
-    borderColor: '#CCC',
+    borderColor: '#77DD77',
   },
 });
