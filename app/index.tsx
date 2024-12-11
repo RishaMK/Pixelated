@@ -1,10 +1,25 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native';
 import { Image } from 'expo-image';
-import { router } from 'expo-router';
+import { useRouter } from 'expo-router';
+import { useCameraPermissions } from 'expo-camera'; // Import the hook
 
-export default function App() {
+const Home = () => {
+  const router = useRouter();
+
+  // Destructure the permission hook to get the status and requestPermission function
+  const [permission, requestPermission] = useCameraPermissions();
+  const hasPermission = permission?.status === 'granted'; // Check if the permission is granted
+
   const backgroundImage = 'https://media.giphy.com/media/YrZECW1GgBkqat6F0B/giphy.gif';
+
+  const handleScanQRCode = () => {
+    if (hasPermission) {
+      router.push('/QRScanPage');  // Navigate to QR scanning page if permission is granted
+    } else {
+      requestPermission(); // Request permission if not granted
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -29,11 +44,17 @@ export default function App() {
           >
             <Text style={styles.buttonText}>SearchGIF</Text>
           </TouchableOpacity>
+
+          <Button
+            title="Scan QR Code"
+            onPress={handleScanQRCode}  // Trigger QR scanning when clicked
+            color="#4CAF50"  // A green color for the scan button
+          />
         </View>
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -99,3 +120,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
+export default Home;
