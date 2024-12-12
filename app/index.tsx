@@ -1,10 +1,24 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native';
 import { Image } from 'expo-image';
-import { router } from 'expo-router';
+import { useRouter } from 'expo-router';
+import { useCameraPermissions } from 'expo-camera'; 
 
-export default function App() {
+const Home = () => {
+  const router = useRouter();
+
+  const [permission, requestPermission] = useCameraPermissions();
+  const hasPermission = permission?.status === 'granted'; 
+
   const backgroundImage = 'https://media.giphy.com/media/YrZECW1GgBkqat6F0B/giphy.gif';
+
+  const handleScanQRCode = () => {
+    if (hasPermission) {
+      router.push('/QRScanPage'); 
+    } else {
+      requestPermission();
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -29,11 +43,19 @@ export default function App() {
           >
             <Text style={styles.buttonText}>SearchGIF</Text>
           </TouchableOpacity>
+
+          {/* Apply same styling to the Scan QR Code button */}
+          <TouchableOpacity 
+            style={[styles.button, styles.buttonRandomGIF]} 
+            onPress={handleScanQRCode}  
+          >
+            <Text style={styles.buttonText}>Scan QR Code</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -54,7 +76,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     maxWidth: 360,
-    maxHeight: 300,
+    maxHeight: 350,
     padding: 30,
     backgroundColor: 'rgba(255, 255, 255, 0.5)', 
     borderRadius: 10,
@@ -70,6 +92,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333', 
     marginBottom: 20,
+    marginTop:30,
     textAlign: 'center',
     textTransform: 'uppercase',
   },
@@ -79,6 +102,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column', 
     justifyContent: 'space-between',
     gap: 20,
+    marginBottom:50
   },
   button: {
     padding: 10,
@@ -99,3 +123,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
+export default Home;

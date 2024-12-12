@@ -1,0 +1,13 @@
+//this is what is needed for the python-based QR backend to work
+Each of these have to be installed globally, but if you want, just go to Pixelated/backend, and run the commands
+
+react-native-qrcode-svg -> 'npm install react-native-qrcode-svg'
+Flask, QRCode -> 'pip install Flask qrcode pillow'
+CORS -> 'pip install flask-cors'   //CORS is Cross-Origin Resource Sharing. we use this because the react app runs on http://localhost:8081, whereas the flask backend runs on https://127.0.0.1:5000
+expo-camera, expo-barcode-scanner -> 'expo install expo-camera expo-barcode-scanner'   //these help in scanning the QR. FYI: expo-barcode-scanner is not supported on web browser.
+        (for some reaosn, if you dont have expo CLI: 'npm install -g expo-cli' )
+
+
+
+running the backend for the QR Code generator to work: 'python app.py'
+app.py contains the backend script
