@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Button, Alert } from 'react-native';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { useCameraPermissions } from 'expo-camera'; 
@@ -12,13 +12,22 @@ const Home = () => {
 
   const backgroundImage = 'https://media.giphy.com/media/YrZECW1GgBkqat6F0B/giphy.gif';
 
-  const handleScanQRCode = () => {
+  const handleScanQRCode = async () => {
     if (hasPermission) {
-      router.push('/QRScanPage'); 
+      router.push('/QRScanPage');
     } else {
-      requestPermission();
+      const permissionResponse = await requestPermission();
+      if (permissionResponse.status === 'granted') {
+        router.push('/QRScanPage');
+      } else {
+        Alert.alert(
+          'Permission Denied',
+          'Camera permission is required to scan QR codes. Please enable it in settings.'
+        );
+      }
     }
   };
+  
 
   return (
     <View style={styles.container}>
@@ -44,7 +53,6 @@ const Home = () => {
             <Text style={styles.buttonText}>SearchGIF</Text>
           </TouchableOpacity>
 
-          {/* Apply same styling to the Scan QR Code button */}
           <TouchableOpacity 
             style={[styles.button, styles.buttonRandomGIF]} 
             onPress={handleScanQRCode}  
