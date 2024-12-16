@@ -1,22 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, Button, Alert, Platform } from 'react-native';
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import { View, Text, StyleSheet, Button, Alert, Platform, Linking } from 'react-native';
+import { Camera, CameraView } from 'expo-camera';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 
 const QRScanPage = () => {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [scanned, setScanned] = useState(false);
-  const [data, setData] = useState<string | null>(null);
   const scannerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (Platform.OS !== 'web') {
       (async () => {
-        const { status } = await BarCodeScanner.requestPermissionsAsync();
+        const { status } = await Camera.requestCameraPermissionsAsync();
         setHasPermission(status === 'granted');
       })();
     } else {
-      setHasPermission(true); // Assume permission for web :)
+      setHasPermission(true);
     }
   }, []);
 
@@ -33,8 +32,7 @@ const QRScanPage = () => {
 
       html5QrcodeScanner.render(
         (decodedText) => {
-          setData(decodedText);
-          Alert.alert('QR Code Scanned', `Data: ${decodedText}`);
+          handleRedirect(decodedText);
           html5QrcodeScanner.clear();
         },
         (error) => {
@@ -48,10 +46,17 @@ const QRScanPage = () => {
     }
   }, [scannerRef]);
 
-  const handleBarCodeScanned = ({ type, data }: { type: string; data: string }) => {
+  const handleRedirect = (url: string) => {
+    if (url.startsWith('https://') || url.startsWith('http://')) {
+      Linking.openURL(url).catch((err) => Alert.alert('Error', `Failed to open URL: ${err.message}`));
+    } else {
+      Alert.alert('Invalid QR Code', 'The scanned QR code does not contain a valid URL.');
+    }
+  };
+
+  const handleBarcodeScanned = ({ data }: { data: string }) => {
     setScanned(true);
-    Alert.alert('QR Code Scanned', `Type: ${type}, Data: ${data}`);
-    setData(data);
+    handleRedirect(data);
   };
 
   if (Platform.OS !== 'web' && hasPermission === null) {
@@ -64,7 +69,7 @@ const QRScanPage = () => {
         <Text>No access to camera.</Text>
         <Button
           title="Grant Permission"
-          onPress={() => BarCodeScanner.requestPermissionsAsync()}
+          onPress={() => Camera.requestCameraPermissionsAsync()}
         />
       </View>
     );
@@ -76,15 +81,17 @@ const QRScanPage = () => {
       {Platform.OS === 'web' ? (
         <div id="scanner" ref={scannerRef} style={{ width: '100%', height: 300 }} />
       ) : (
-        <BarCodeScanner
-          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        <CameraView
+          onBarcodeScanned={scanned ? undefined : handleBarcodeScanned}
+          barcodeScannerSettings={{
+            barcodeTypes: ['qr'],
+          }}
           style={StyleSheet.absoluteFillObject}
         />
       )}
       {scanned && (
         <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />
       )}
-      {data && <Text>Scanned Data: {data}</Text>}
     </View>
   );
 };
